@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Anime | Añadir Categorias{% endblock %}
+{% block categories %}
+        <div class="sidebar-heading">Categorias </div>
+          <div class="list-group list-group-flush">
+          {% for category in objects %}
+          <div class="dropdown">
+            <a href="#" class="list-group-item list-group-item-action bg-light " 
+            {% if user.is_staff %}data-toggle="dropdown">{% endif %}
+              {{category}} {% if user.is_staff %}<i class="fa fa-caret-down"></i>{% endif %}
+            </a>
+            {% if user.is_staff %}
+            <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" href="">Buscar por categoria</a>
+              <a class="dropdown-item" href="{% url 'post:update' category.id %}">Editar</a>
+              <a class="dropdown-item" href="{% url 'post:delete' category.id %}">Borrar</a>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+          </div>
+{% endblock %}
+      
+{% block content %}
+<style>.errorlist{color:red;} label{display:none}</style>
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+      {% if 'ok' in request.GET %}
+          <p style="color:green">
+            se añadio corectamente
+          </p>
+        {% endif%}
+      {% if user.is_staff %}
+        <form action="" method="post">{% csrf_token %}
+          <h3 class="mb-4">Añadir Categorias</h3>
+            {{form.as_p}}
+          <p><input type="submit" class="btn btn-primary btn-block " value="Añadir"></p>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+

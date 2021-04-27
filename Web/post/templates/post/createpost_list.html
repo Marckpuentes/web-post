@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Anime | Home{% endblock %}
+{% block categories %}
+        <div class="sidebar-heading">Categorias </div>
+          <div class="list-group list-group-flush">
+          {% for category in objects %}
+          <div class="dropdown">
+            <a href="#" class="list-group-item list-group-item-action bg-light ">
+            {% comment %} {% if user.is_staff %}data-toggle="dropdown">{% endif %} {% endcomment %}
+              {{category}} {% if user.is_staff %}<i class="fa fa-caret-down"></i>{% endif %}
+            </a>
+            {% if user.is_staff %}
+            <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" href="">Buscar por categoria</a>
+              <a class="dropdown-item" href="{% url 'post:update' category.id %}">Editar</a>
+              <a class="dropdown-item" href="{% url 'post:delete' category.id %}">Borrar</a>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+          </div>
+{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;} label{display:none;} a{text-decoration:none;}</style>
+<section class="page-section portfolio" id="portfolio">
+  <div class="container"> 
+    <div class="row justify-content-center">
+      {% for anime in object_list %}
+      <div class="col-md-6 col-lg-2 mb-5">
+        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+        
+          {% if anime.img %}
+          <a href="{% url 'post:detail'  anime.slug %}" style="text-decoration:none"><img class="img-fluid" src= "{{ anime.img.url }}"  alt="{{anime.title}}"/>
+          <p class="text"> <strong>{{anime.title}}</strong></a>
+          {% endif %}  
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>  
+</section>
+{% endblock %}
+
