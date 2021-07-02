@@ -17,12 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from post.urls import post_patterns
+from cap.urls import cap_patterns
+from core.urls import core_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
     path('', include(post_patterns)),
+    path('', include(cap_patterns)),
+    path('', include(core_patterns)),
+    
     
 ]
 if settings.DEBUG:

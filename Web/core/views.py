@@ -17,7 +17,7 @@ class HomePageView(TemplateView):
         return render (request, self.template_name, {'title':"La Mejor Web"})
 
 class SamplePageView(TemplateView):
-    template_name = "core/sample.html"    
+    template_name = "core/404.html"    
 
 
 #def sample(request):

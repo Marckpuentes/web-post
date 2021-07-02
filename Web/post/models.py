@@ -16,8 +16,9 @@ class Categories(models.Model):
 
 
 def custom_upload_to(instance, filename):
-    #old_intance = CreatePost.objects.get(pk=instance.pk)
-    #old_intance.img.delete()
+    #borra la imagen actual que esta guardada y guarda la nueva
+    old_intance = CreatePost.objects.get(pk=instance.pk)
+    old_intance.img.delete()
     return 'post/'+filename
 
 class CreatePost(models.Model):
@@ -32,6 +33,9 @@ class CreatePost(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(CreatePost, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = 'Anime'

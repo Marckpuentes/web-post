@@ -1,35 +1,57 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}Registro{% endblock %}
+{% block style %}
+
+{% endblock %}
+{% block title %}{{object.title}}{% endblock %}
 {% block content %}
 <style>.errorlist{color:red;} label{display:none}</style>
-<main role="main">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-9 mx-auto mb-5">
-        <h1>{{object.title}}</h1>
-        {% if 'ok' in request.GET %}
-          <p style="color:green">
-            La pagina fue editada correctamente <strong>{{object.slug}}</strong> 
-          </p>
-        {% endif%}
-        {% if user.is_staff %}
-        <a href="{% url 'post:update-post' object.slug %}">Editar</a>
-        <a href="{% url 'post:delete-post' object.slug %}">Eliminar</a>
-        {% endif %}
+<div class="container mt-5">
+  <div class="photo-card">
+    <img class="img-fluid" src="{{object.img.url}}" alt="">
+    <div class="photo-details">
+    {% if 'ok' in request.GET %}
+      <p style="color:green">
+      La pagina fue editada correctamente <strong>{{object.slug}}</strong> 
+      </p>
+    {% endif%}
+      <h1>{{object.title}}</h1>               
+    {% if user.is_staff %}
+      <div class="photo-tags">
         <ul>
-            {% if object.img %}
-                <a href="{% url 'post:detail'  object.slug %}"><img src="{{ object.img.url }}" class="img-fluid"></a>
-            {% endif %}
-            {% for category in object.category.all %}
-            <li>{{category.category}}</li>
-            {% endfor %}   
-            {{object.content}}     
+          <li><a href="{% url 'post:update-post' object.slug %}">Editar</a></li>
+          <li><a href="{% url 'post:delete-post' object.slug %}">Eliminar</a></li>
         </ul>
       </div>
-      
+    {% endif %}
+      <br>
+      <p>{{object.content}}</p>
+        <div class="photo-tags"><br>
+          <ul>
+            {% for category in object.category.all %}
+            <li><a href="{% url 'post:search' category %}">{{category}}</a></li>
+            {% endfor %}
+          </ul>
+      </div>
     </div>
-  </div>
-</main>
+  </div>      
 
+<div id="imagenContenedor" class="container mt-3 mb-3 col-xs-12">
+  <ul class="list-group list-group-horizontal-xl">
+    <div class="row justify-content mt-3">
+      {% for cap in objects %} 
+      <div class="row mx-auto mb-3">
+        <div class="hovereffect ml-1">
+          <li class="list-group"><img class="img-responsive" src="{{cap.img.url}}" alt=""></li>
+          <div class="overlay">
+            <h2>{{cap.numeroCapitulo}}</h2>
+            <a class="info" href="#">Ver</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </ul>  
+</div>
+</div> 
 {% endblock %}

@@ -1,26 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block title %}Anime | Añadir Categorias{% endblock %}
-{% block categories %}
-        <div class="sidebar-heading">Categorias </div>
-          <div class="list-group list-group-flush">
-          {% for category in objects %}
-          <div class="dropdown">
-            <a href="#" class="list-group-item list-group-item-action bg-light " 
-            {% if user.is_staff %}data-toggle="dropdown">{% endif %}
-              {{category}} {% if user.is_staff %}<i class="fa fa-caret-down"></i>{% endif %}
-            </a>
-            {% if user.is_staff %}
-            <div class="dropdown-menu" aria-labelledby="dropdown">
-            <a class="dropdown-item" href="">Buscar por categoria</a>
-              <a class="dropdown-item" href="{% url 'post:update' category.id %}">Editar</a>
-              <a class="dropdown-item" href="{% url 'post:delete' category.id %}">Borrar</a>
-            </div>
-            {% endif %}
-          </div>
-          {% endfor %}
-          </div>
-{% endblock %}
       
 {% block content %}
 <style>.errorlist{color:red;} label{display:none}</style>

@@ -40,22 +40,23 @@ class CategoriesUpdateForms(forms.ModelForm):
         
 
 class PostUpdateForms(forms.ModelForm):
+      
+    def __init__(self, *args, **kwargs):
+        super(PostUpdateForms, self).__init__(auto_id=True, *args, **kwargs)
+        self.fields['category'].label = ''
+        self.fields['title'].label = ''
+        self.fields['content'].label = ''
+        self.fields['img'].label = ''
+
     
-
-    #category = CustomMMCF(queryset=Categories.objects.all(),
-    #widget=forms.CheckboxSelectMultiple)
-
     class Meta:
         model = CreatePost
         fields = ['title', 'img', 'category', 'content' ]
         widgets = {
             'title':forms.TextInput(attrs={'class':'form-control'}),
-            #'category':forms.CheckboxSelectMultiple()
+            'img':forms.ClearableFileInput(),
+            'category':forms.CheckboxSelectMultiple(),
+            'content':forms.Textarea(attrs={'class':'form-control'})
         }
 
-"""     def __init__ (self, *args, **kwargs):
-        super(PostUpdateForms, self).__init__(*args, **kwargs)
-        self.fields["category"].widget = forms.widgets.CheckboxSelectMultiple()
-        self.fields["category"].help_text = "" 
-        self.fields["category"].queryset = Categories.objects.all()   """ 
             
